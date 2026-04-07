@@ -232,15 +232,6 @@ If a command exits with code 1, check the following:
 5. Python dependencies are installed in the active virtual environment.
 6. Ports 5000, 5001, 5173 are not already in use.
 
-## Notes for Production Hardening
-
-Before deploying publicly, prioritize:
-- moving all secrets to environment variables
-- enabling strict TLS config for SMTP
-- adding automated tests (backend + frontend)
-- adding CI/CD checks and linting
-- reviewing security headers and CSRF strategy
-
 ## License
 
-Add a license file (for example MIT) if you want open-source reuse terms to be explicit.
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for the full text.
