@@ -1,0 +1,700 @@
+/* ═══════════════════════════════════════════════════════
+   OCR Modal — ocr-modal.css
+   All selectors are prefixed with .ocr- to stay isolated
+   from the rest of styles.css
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Trigger button in chat header ── */
+.ocr-trigger-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, rgba(77, 166, 255, 0.15), rgba(168, 85, 247, 0.15));
+  border: 1px solid rgba(77, 166, 255, 0.4);
+  border-radius: 8px;
+  color: #4da6ff;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 14px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: inherit;
+}
+
+.ocr-trigger-btn:hover {
+  background: linear-gradient(135deg, rgba(77, 166, 255, 0.25), rgba(168, 85, 247, 0.25));
+  border-color: #4da6ff;
+  box-shadow: 0 0 20px rgba(77, 166, 255, 0.25);
+  transform: translateY(-2px);
+}
+
+.ocr-trigger-icon {
+  font-size: 16px;
+}
+
+/* ── Backdrop ── */
+.ocr-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+
+  /* Blur the chat behind the modal */
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+
+  animation: ocrFadeIn 0.25s ease;
+}
+
+@keyframes ocrFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Modal window ── */
+.ocr-modal-window {
+  background: rgba(14, 14, 22, 0.97);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  border: 1px solid rgba(77, 166, 255, 0.2);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 560px;
+  max-height: 90vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  box-shadow:
+    0 0 0 1px rgba(77, 166, 255, 0.08),
+    0 30px 80px rgba(0, 0, 0, 0.6),
+    0 0 60px rgba(77, 166, 255, 0.06);
+  animation: ocrSlideUp 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(77, 166, 255, 0.3) transparent;
+}
+
+.ocr-modal-window::-webkit-scrollbar {
+  width: 6px;
+}
+.ocr-modal-window::-webkit-scrollbar-track {
+  background: transparent;
+}
+.ocr-modal-window::-webkit-scrollbar-thumb {
+  background: rgba(77, 166, 255, 0.3);
+  border-radius: 10px;
+}
+
+@keyframes ocrSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(40px) scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* ── Modal header ── */
+.ocr-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 28px 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+  flex-shrink: 0;
+}
+
+.ocr-modal-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  background: linear-gradient(135deg, #fff 0%, #4da6ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ocr-modal-title-icon {
+  font-size: 22px;
+  /* Emoji — override gradient fill */
+  -webkit-text-fill-color: initial;
+}
+
+.ocr-modal-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 9px;
+  background: linear-gradient(135deg, #4da6ff, #a855f7);
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+  /* Override gradient text for badge */
+  -webkit-text-fill-color: #fff;
+  color: #fff;
+}
+
+.ocr-modal-close {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.25s;
+  font-family: inherit;
+}
+
+.ocr-modal-close:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  transform: rotate(90deg);
+}
+
+/* ── Stage progress bar ── */
+.ocr-stage-bar {
+  display: flex;
+  align-items: center;
+  padding: 16px 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.ocr-stage-step {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.3);
+  transition: color 0.3s;
+  flex-shrink: 0;
+}
+
+.ocr-stage-step.active {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.ocr-stage-step.current {
+  color: #4da6ff;
+}
+
+.ocr-stage-dot {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  font-weight: 700;
+  transition: all 0.3s;
+  flex-shrink: 0;
+}
+
+.ocr-stage-step.active .ocr-stage-dot {
+  background: rgba(77, 166, 255, 0.15);
+  border-color: rgba(77, 166, 255, 0.4);
+  color: #4da6ff;
+}
+
+.ocr-stage-step.current .ocr-stage-dot {
+  background: linear-gradient(135deg, #4da6ff, #a855f7);
+  border-color: transparent;
+  color: #fff;
+  box-shadow: 0 0 12px rgba(77, 166, 255, 0.5);
+}
+
+.ocr-stage-line {
+  flex: 1;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.08);
+  margin: 0 10px;
+  border-radius: 2px;
+  transition: background 0.3s;
+  min-width: 20px;
+}
+
+.ocr-stage-line.filled {
+  background: linear-gradient(90deg, #4da6ff, #a855f7);
+}
+
+/* ── Modal body ── */
+.ocr-modal-body {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+
+/* ── Dropzone ── */
+.ocr-dropzone {
+  border: 2px dashed rgba(77, 166, 255, 0.3);
+  border-radius: 16px;
+  padding: 48px 28px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+  background: rgba(77, 166, 255, 0.03);
+  position: relative;
+  overflow: hidden;
+}
+
+.ocr-dropzone::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(77, 166, 255, 0.08) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.ocr-dropzone:hover,
+.ocr-dropzone.drag-active {
+  border-color: #4da6ff;
+  background: rgba(77, 166, 255, 0.07);
+  transform: translateY(-3px);
+}
+
+.ocr-dropzone:hover::before,
+.ocr-dropzone.drag-active::before {
+  opacity: 1;
+}
+
+.ocr-drop-icon {
+  color: rgba(77, 166, 255, 0.6);
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+}
+
+.ocr-drop-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  margin-bottom: 6px;
+}
+
+.ocr-drop-sub {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* ── Preview ── */
+.ocr-preview-section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ocr-preview-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ocr-preview-img-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  max-height: 200px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.ocr-preview-img {
+  max-width: 100%;
+  max-height: 200px;
+  object-fit: contain;
+}
+
+.ocr-file-info {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ocr-file-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4da6ff;
+  word-break: break-all;
+}
+
+.ocr-file-size {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.4);
+  flex-shrink: 0;
+  margin-left: 8px;
+}
+
+/* ── Review stage ── */
+.ocr-review-row {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.ocr-review-thumb {
+  width: 90px;
+  height: 70px;
+  object-fit: cover;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+}
+
+.ocr-review-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 0;
+}
+
+/* ── Extracted text ── */
+.ocr-text-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ocr-text-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ocr-textarea {
+  width: 100%;
+  padding: 14px 16px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  color: #fff;
+  font-size: 14px;
+  line-height: 1.6;
+  resize: vertical;
+  outline: none;
+  font-family: 'Courier New', monospace;
+  transition: all 0.3s;
+  min-height: 140px;
+}
+
+.ocr-textarea:focus {
+  border-color: #4da6ff;
+  background: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.1);
+}
+
+.ocr-textarea::placeholder {
+  color: rgba(255, 255, 255, 0.3);
+}
+
+.ocr-char-count {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
+  text-align: right;
+}
+
+/* ── Filename ── */
+.ocr-filename-section {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.ocr-filename-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+}
+
+.ocr-filename-input {
+  flex: 1;
+  padding: 12px 14px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px 0 0 10px;
+  border-right: none;
+  color: #fff;
+  font-size: 14px;
+  outline: none;
+  transition: all 0.3s;
+  font-family: inherit;
+}
+
+.ocr-filename-input:focus {
+  border-color: #4da6ff;
+  background: rgba(255, 255, 255, 0.07);
+  box-shadow: 0 0 0 3px rgba(77, 166, 255, 0.1);
+}
+
+.ocr-filename-ext {
+  padding: 12px 14px;
+  background: rgba(77, 166, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0 10px 10px 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 14px;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+/* ── Alert ── */
+.ocr-alert {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  border-radius: 10px;
+  color: #ff8f8f;
+  font-size: 14px;
+}
+
+/* ── Shared helpers ── */
+.ocr-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.45);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.ocr-hint {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+/* ── Buttons ── */
+.ocr-btn-primary {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, #4da6ff, #a855f7);
+  border: none;
+  border-radius: 12px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+}
+
+.ocr-btn-primary:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(77, 166, 255, 0.35);
+}
+
+.ocr-btn-primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.ocr-btn-primary.loading {
+  opacity: 0.85;
+  cursor: wait;
+}
+
+.ocr-btn-secondary {
+  padding: 13px 20px;
+  background: rgba(168, 85, 247, 0.12);
+  border: 1px solid rgba(168, 85, 247, 0.35);
+  border-radius: 12px;
+  color: #c084fc;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-family: inherit;
+}
+
+.ocr-btn-secondary:hover:not(:disabled) {
+  background: rgba(168, 85, 247, 0.22);
+  transform: translateY(-2px);
+}
+
+.ocr-btn-secondary:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.ocr-btn-ghost {
+  padding: 7px 13px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 8px;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+  font-family: inherit;
+  white-space: nowrap;
+}
+
+.ocr-btn-ghost:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.ocr-btn-wide {
+  flex: 1;
+}
+
+/* Action row (Review stage — two buttons side by side) */
+.ocr-action-row {
+  display: flex;
+  gap: 12px;
+  align-items: stretch;
+}
+
+.ocr-action-row .ocr-btn-secondary {
+  flex-shrink: 0;
+}
+
+.ocr-action-row .ocr-btn-primary {
+  flex: 1;
+  width: auto;
+}
+
+/* ── Spinner ── */
+.ocr-spinner {
+  display: inline-block;
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: ocrSpin 0.7s linear infinite;
+  flex-shrink: 0;
+}
+
+@keyframes ocrSpin {
+  to { transform: rotate(360deg); }
+}
+
+/* ── Done stage ── */
+.ocr-done-section {
+  text-align: center;
+  padding: 20px 0 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.ocr-done-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #4da6ff, #a855f7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  color: #fff;
+  font-weight: 700;
+  box-shadow: 0 0 30px rgba(77, 166, 255, 0.4);
+  animation: ocrPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes ocrPop {
+  from { transform: scale(0); opacity: 0; }
+  to   { transform: scale(1); opacity: 1; }
+}
+
+.ocr-done-title {
+  font-size: 22px;
+  font-weight: 800;
+  background: linear-gradient(135deg, #fff 0%, #4da6ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ocr-done-sub {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.ocr-done-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-top: 12px;
+  width: 100%;
+  justify-content: center;
+}
+
+/* ── Modal footer ── */
+.ocr-modal-footer {
+  padding: 14px 28px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.25);
+  text-align: center;
+  flex-shrink: 0;
+}
+
+/* ── Responsive ── */
+@media (max-width: 600px) {
+  .ocr-modal-window {
+    max-height: 95vh;
+    border-radius: 18px;
+  }
+
+  .ocr-modal-body {
+    padding: 20px;
+  }
+
+  .ocr-modal-header {
+    padding: 18px 20px 14px;
+  }
+
+  .ocr-stage-bar {
+    padding: 12px 20px;
+  }
+
+  .ocr-stage-step span {
+    display: none; /* hide labels, keep dots + lines on small screens */
+  }
+
+  .ocr-action-row {
+    flex-direction: column;
+  }
+
+  .ocr-done-actions {
+    flex-direction: column;
+  }
+
+  .ocr-trigger-btn span:last-child {
+    /* keep text on mobile but shorten */
+  }
+}

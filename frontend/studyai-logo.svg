@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="StudyAI logo">
+  <defs>
+    <linearGradient id="brandGradient" x1="12" y1="12" x2="108" y2="108" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#4da6ff"/>
+      <stop offset="1" stop-color="#a855f7"/>
+    </linearGradient>
+    <linearGradient id="bookGlow" x1="60" y1="40" x2="60" y2="88" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffffff"/>
+      <stop offset="1" stop-color="#dff2ff"/>
+    </linearGradient>
+  </defs>
+
+  <rect x="8" y="8" width="104" height="104" rx="28" fill="url(#brandGradient)"/>
+  <path d="M60 32L60 80" stroke="#ffffff" stroke-opacity=".35" stroke-width="2.2" stroke-linecap="round"/>
+
+  <path d="M60 76c-5.6-4.4-13.2-6.8-24-6.8-4.8 0-8.6.4-12 1.2V45.5c3.5-.8 7.3-1.2 12-1.2 10.8 0 18.4 2.4 24 6.8V76z" fill="url(#bookGlow)" fill-opacity=".95"/>
+  <path d="M60 76c5.6-4.4 13.2-6.8 24-6.8 4.8 0 8.6.4 12 1.2V45.5c-3.5-.8-7.3-1.2-12-1.2-10.8 0-18.4 2.4-24 6.8V76z" fill="url(#bookGlow)" fill-opacity=".95"/>
+
+  <circle cx="42" cy="36" r="5.2" fill="#ffffff"/>
+  <circle cx="60" cy="28" r="4.2" fill="#d7efff"/>
+  <circle cx="78" cy="36" r="5.2" fill="#ffffff"/>
+  <path d="M46.5 34.2L55.4 30.3M64.6 30.3L73.5 34.2" stroke="#ffffff" stroke-width="2.2" stroke-linecap="round" stroke-opacity=".9"/>
+
+  <path d="M33 84h54" stroke="#ffffff" stroke-opacity=".38" stroke-width="2.4" stroke-linecap="round"/>
+  <path d="M38 90h44" stroke="#ffffff" stroke-opacity=".26" stroke-width="2.4" stroke-linecap="round"/>
+</svg>
